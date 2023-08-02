@@ -37,4 +37,16 @@ public class Tours {
     @Column(name = "cover_image_link", nullable = false)
     private String coverImageLink;
 
+    @Override
+    public String toString() {
+        return "Tours{" +
+                "tourCode=" + tourCode +
+                ", tourName='" + tourName + '\'' +
+                ", tourShortDescription='" + tourShortDescription + '\'' +
+                ", tourCountry='" + tourCountry + '\'' +
+                ", hotelName='" + hotelName + '\'' +
+                ", hotelDescription='" + hotelDescription + '\'' +
+                ", coverImageLink='" + coverImageLink + '\'' +
+                '}';
+    }
 }

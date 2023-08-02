@@ -1,0 +1,40 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор туров и дата поездки</title>
+</head>
+<body>
+<h1>Выбор туров и дата поездки</h1>
+
+<form action="/dateAndShowTours" method="post">
+    <div>
+        <label for="startDate">Выберите дату начала поездки:</label>
+        <input type="date" id="startDate" name="startDate" required>
+    </div>
+    <div>
+        <label for="endDate">Выберите дату окончания поездки:</label>
+        <input type="date" id="endDate" name="endDate" required>
+    </div>
+    <div>
+        <button type="submit">Подтвердить даты</button>
+    </div>
+</form>
+
+<div th:if="${showTours}">
+    <h2>Список доступных туров:</h2>
+    <div th:each="tour : ${toursList}" style="border: 1px solid black">
+        <div>
+            <a a th:href="@{/dateAndShowTours/selectTour/{tourCode}(tourCode=${tour.tourCode})}">
+                <h3 th:text="${tour.tourName}"></h3>
+                <p th:text="${tour.tourCountry}"></p>
+                <p th:text="${tour.tourShortDescription}"></p>
+                <p th:text="${tour.hotelName}"></p>
+                <img th:src="${tour.coverImageLink}" alt="Hotel Image" width="250" height="250">
+            </a>
+        </div>
+    </div>
+</div>
+</body>
+</html>
