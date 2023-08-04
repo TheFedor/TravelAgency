@@ -1,0 +1,25 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор транспорта</title>
+</head>
+<body>
+
+<div th:each="aat : ${allAboutTransports}">
+  <div style="border: 1px  solid black" class="clickableBlock" th:data-href="@{'/transportPage/selectTransport/' + ${aat.transportTypeCode} + '/' + ${aat.transportPrice}}">
+    <h3>Тип транспорта: <h2><span th:text="${aat.getTransportType()}"></span> </h2></h3>
+    <h3>Описание транспорта:</h3>
+    <div><span th:text="${aat.getTransportDescription()}"></span></div>
+    <h3>Цена транспорта: <h2><span th:text="${aat.getTransportPrice()}"></span></h2></h3>
+  </div>
+</div>
+
+<form action="redirect:/tourDescriptionAndTourRoomsPage" method="get">
+  <button type="submit">Назад к выбору номеров тура</button>
+</form>
+
+<script src="/js/clickableBlocks.js"></script>
+</body>
+</html>
