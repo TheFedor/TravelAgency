@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <title>Дозаполнение данных клиента</title>
+</head>
+<body>
+<button
+
+<form th:action="@{/addMoreData}" th:object="${localClient}" method="post">
+    <div>
+        <label for="passportSeries">Серия паспорта:</label>
+        <input type="text" id="passportSeries" name="passportSeries" required pattern="\d{4}"
+               placeholder="Введите серию паспорта (без пробелов)" title="Без пробелов четыре числа"/>
+    </div>
+    <div>
+        <label for="passportNumber">Серия паспорта:</label>
+        <input type="text" id="passportNumber" name="passportNumber" required pattern="\d{6}"
+               placeholder="Введите номер паспорта (без пробелов)" title="Без пробелов шесть чисел"/>
+    </div>
+    <div>
+        <button type="submit">Сохранить</button>
+    </div>
+</form>
+
+</body>
+</html>

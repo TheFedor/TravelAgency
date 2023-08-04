@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Вход</title>
+  <!-- Подключаем CSS файл -->
+  <link rel="stylesheet" href="/css/passwordIcon.css">
+</head>
+<body>
+<h1>Вход</h1>
+<form th:action="@{/login}" method="post">
+  <div>
+    <label for="clientLogin">Логин:</label>
+    <!-- Без пробелов вообще. От 5 до 25 символов -->
+    <input type="text" id="clientLogin" name="clientLogin" required pattern="^[^\s]+$" minlength="5" maxlength="25"
+           placeholder="Введите логин (без пробелов)" title="Без пробелов, длиной от 5 до 25 символов"/>
+  </div>
+  <div class="password-container">
+    <label for="clientPassword">Пароль:</label>
+    <!-- Без пробелов вообще. От 8 до 18 символов -->
+    <input type="password" id="clientPassword" name="clientPassword" required pattern="^[^\sа-яА-ЯёЁ]+$" minlength="8" maxlength="18"
+           placeholder="Введите пароль (НЕ кириллицей, без пробелов)" title="Без пробелов, длиной от 8 до 18 символов. НЕ кириллицей"/>
+    <span class="show-password-icon" onclick="togglePasswordVisibility()">
+      <!-- Иконка для скрытия пароля -->
+      <img src="/technical-images/moon_icon.png" width="20" height="20" alt="Показать пароль" class="show-icon"/>
+
+      <!-- Иконка для показа пароля -->
+      <img src="/technical-images/sun_icon.png" width="20" height="20" alt="Скрыть пароль" class="hide-icon"/>
+    </span>
+  </div>
+  <div>
+    <button type="submit">Войти</button>
+  </div>
+</form>
+<!--Кнопка для перехода к странице регистрации-->
+<form action="/registration" method="get">
+  <button type="submit">Не регистрировались ранее? Зарегистрируйтесь</button>
+</form>
+<!--Проверяем есть ли сообщение об ошибке-->
+<div th:if="${errorMessageAuthorization}" style="color: red;"}>
+  <p th:text="${errorMessageAuthorization}"></p>
+</div>
+<script src="/js/ChangingPasswordVisibilityLogin.js"></script>
+</body>
+</html>

@@ -12,7 +12,7 @@ public class StartController {
     @GetMapping
     public String deleteAllINformationsFromSession(HttpSession session) {
         session.invalidate();
-        return "redirect:/dateAndShowTours";
+        return "redirect:/registration";
     }
 
 }

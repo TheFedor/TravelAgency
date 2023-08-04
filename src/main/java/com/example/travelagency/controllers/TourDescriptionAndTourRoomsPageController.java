@@ -18,6 +18,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 @Controller
 @RequestMapping("/tourDescriptionAndTourRoomsPage")
@@ -124,6 +125,22 @@ public class TourDescriptionAndTourRoomsPageController {
         }
         session.setAttribute("roomsAndItsPrice", alreadySelectedTheseRoom);
 
+        return "redirect:/tourDescriptionAndTourRoomsPage";
+    }
+
+    @GetMapping("/isTransportPage")
+    public String isAtLeastOneNumberSelected(HttpSession session)
+    {
+        Optional<List<IntegerIntegerPair>> roomsAndItsPriceOpt = Optional.ofNullable((List<IntegerIntegerPair>) session.getAttribute("roomsAndItsPrice"));
+
+        if (roomsAndItsPriceOpt.isPresent())
+        {
+            int count = roomsAndItsPriceOpt.get().size();
+            if (count > 0)
+            {
+                return "redirect:/transportPage";
+            }
+        }
         return "redirect:/tourDescriptionAndTourRoomsPage";
     }
 

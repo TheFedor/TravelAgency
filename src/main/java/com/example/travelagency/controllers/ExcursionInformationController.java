@@ -43,8 +43,6 @@ public class ExcursionInformationController {
 
         //получаем информацию о датах проведения данной экскурсии
         List<LocalDate[]> excursionDates = excursionsDatesRepository.findAllExcursionDates(thisExcursionCode);
-        for (LocalDate[] ld : excursionDates)
-            System.out.println(ld[0] + " --- " + ld[1]);
 
         //получаем фотографии данной экскурсии
         List<String> excursionPhotos = excursionPhotosRepository.findAllExcursionPhotos(thisExcursionCode);

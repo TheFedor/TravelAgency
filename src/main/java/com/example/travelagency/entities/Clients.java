@@ -53,4 +53,19 @@ public class Clients {
     @Size(min = 6, max = 6)
     private String passportNumber;
 
+    @Override
+    public String toString() {
+        return "Clients{" +
+                "clientLogin='" + clientLogin + '\'' +
+                ", clientPassword='" + clientPassword + '\'' +
+                ", lastName='" + lastName + '\'' +
+                ", firstName='" + firstName + '\'' +
+                ", patronymic='" + patronymic + '\'' +
+                ", age=" + age +
+                ", emailAddress='" + emailAddress + '\'' +
+                ", phoneNumber='" + phoneNumber + '\'' +
+                ", passportSeries='" + passportSeries + '\'' +
+                ", passportNumber='" + passportNumber + '\'' +
+                '}';
+    }
 }

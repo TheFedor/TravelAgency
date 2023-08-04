@@ -1,5 +1,6 @@
 package com.example.travelagency.controllers;
 
+import com.example.travelagency.entities.Clients;
 import com.example.travelagency.entities.Excursions;
 import com.example.travelagency.pairClasses.ExcursionsPhotos;
 import com.example.travelagency.repositories.ExcursionPhotosRepository;
@@ -114,9 +115,13 @@ public class ExcursionsController {
     @GetMapping("/toResultPage")
     public String end(HttpSession session)
     {
+        Clients thisClient = (Clients) session.getAttribute("client");
         //просматриваем клиента и если он имеет поля серии и номера паспорта, то отправляем на страницу заполнения БД
         //а если не имеет, то переадресовываем на страницу заполнения серии и номера паспорта
-        return "excursionsPage";
+        if (thisClient.getPassportSeries() == null || thisClient.getPassportNumber() == null)
+            return "redirect:/addMoreData";
+        else
+            return "redirect:/rezultsPage";
     }
 
     @PostMapping("/saveTicketsValue")
@@ -124,14 +129,6 @@ public class ExcursionsController {
         Map<Integer, Integer> localMap = (Map) session.getAttribute("numberOfExcursionTickets");
         localMap.put(blockKey, value);
         session.setAttribute("numberOfExcursionTickets", localMap);
-
-        //а теперь небольшая проверка на изменения
-        Set<Integer> keys = localMap.keySet();
-        for (Integer key : keys)
-        {
-            System.out.println("key: " + key + " ; value: " + localMap.get(key));
-        }
-        System.out.println();
 
         return "redirect:/excursionsPage"; // Редирект обратно на страницу с экскурсиями
     }

@@ -1,0 +1,110 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+  <title>Регистрация</title>
+  <!-- Подключаем CSS файл -->
+  <link rel="stylesheet" href="/css/passwordIcon.css">
+</head>
+<body>
+<h1>Регистрация нового клиента</h1>
+<!--Проверяем есть ли сообщение об ошибке-->
+<div th:if="${errorMessageRegistration}" style="color: red;"}>
+  <p th:text="${errorMessageRegistration}"></p>
+</div>
+<form th:action="@{/registration}" th:object="${client}" method="post">
+  <div>
+    <label for="clientLogin">Логин:</label>
+    <!-- Без пробелов вообще. От 5 до 25 символов -->
+    <input type="text" id="clientLogin" name="clientLogin" required pattern="^[^\s]+$" minlength="5" maxlength="25"
+           placeholder="Введите логин (без пробелов)" title="Без пробелов, длиной от 5 до 25 символов"/>
+  </div>
+  <div class="password-container">
+    <label for="clientPassword">Пароль:</label>
+    <!-- Без пробелов вообще. Не кириллицей. От 8 до 18 символов -->
+    <input type="password" id="clientPassword" name="clientPassword" required pattern="^[^\sа-яА-ЯёЁ]+$" minlength="8" maxlength="18"
+           placeholder="Введите пароль (НЕ кириллицей, без пробелов)" title="Без пробелов, длиной от 8 до 18 символов. НЕ кириллицей"/>
+    <span class="show-password-icon" onclick="togglePasswordVisibility()">
+      <!-- Иконка для скрытия пароля -->
+      <img src="/technical-images/moon_icon.png" width="20" height="20" alt="Показать пароль" class="show-icon"/>
+
+      <!-- Иконка для показа пароля -->
+      <img src="/technical-images/sun_icon.png" width="20" height="20" alt="Скрыть пароль" class="hide-icon"/>
+    </span>
+  </div>
+  <!-- Поля для повторного ввода пароля -->
+  <div class="password-container">
+    <label for="confirmPassword">Подтвердите пароль:</label>
+    <!-- Без пробелов вообще. Не кириллицей. От 8 до 18 символов -->
+    <input type="password" id="confirmPassword" name="confirmPassword" required pattern="^[^\sа-яА-ЯёЁ]+$" minlength="8" maxlength="18"
+           placeholder="Повторите пароль" title="Без пробелов, длиной от 8 до 18 символов. НЕ кириллицей"/>
+    <span class="show-confirm-password-icon" onclick="togglePasswordVisibility()">
+      <!- Иконка для скрытия пароля ->
+      <img src="/technical-images/moon_icon.png" width="20" height="20" alt="Показать пароль" class="show-icon"/>
+
+      <!- Иконка для показа пароля ->
+      <img src="/technical-images/sun_icon.png" width="20" height="20" alt="Скрыть пароль" class="hide-icon"/>
+    </span>
+    <div class="password-match-error" style="color: red; display: none;">Пароли не совпадают.</div>
+  </div>
+  <div>
+    <label for="lastName">Фамилия:</label>
+    <!-- Без пробелов в начале и в конце. Длиной от 2 до 36 символов -->
+    <input type="text" id="lastName" name="lastName" required pattern="^(?!\s)([a-zA-Zа-яА-ЯёЁ]+\s)*[a-zA-Zа-яА-ЯёЁ]+$" minlength="2" maxlength="36"
+           placeholder="Введите фамилию (без пробелов в начале и конце)" title="Ваша фамилия. Без пробелов в начале и конце, длиной от 2 до 36 символов"/>
+  </div>
+  <div>
+    <label for="firstName">Имя:</label>
+    <!-- Без пробелов в начале и в конце. Длиной от 1 до 49 символов -->
+    <input type="text" id="firstName" name="firstName" required pattern="^(?!\s)([a-zA-Zа-яА-ЯёЁ]+\s)*[a-zA-Zа-яА-ЯёЁ]+$" minlength="1" maxlength="49"
+           placeholder="Введите имя (без пробелов в начале и конце)" title="Ваше имя. Без пробелов в начале и конце, длиной от 1 до 49 символов"/>
+  </div>
+  <div>
+    <label for="patronymic">*Отчество:</label>
+    <!-- Без пробелов в начале и конце. Длиной от 1 до 100 символов. Или, если отчества нет, ничего не вводить -->
+    <input type="text" id="patronymic" name="patronymic" pattern="^(?!\s)([a-zA-Zа-яА-ЯёЁ]+\s)*[a-zA-Zа-яА-ЯёЁ]+$" minlength="1" maxlength="100"
+           placeholder="Отчество (необязательно)" title="Введите отчество (необязательно). Без пробелов в начале и конце. Длиной от 1 до 100 символов"/>
+  </div>
+  <div>
+    <label for="age">Возраст:</label>
+    <!-- Просто возраст, только числами -->
+    <input type="number" id="age" name="age" required
+           placeholder="Сколько вам полных лет" title="Введите свой возраст"/>
+  </div>
+  <div>
+    <label for="emailAddress">Адрес электронной почты:</label>
+    <!-- Встроенная проверка email. Менять не буду -->
+    <input type="email" id="emailAddress" name="emailAddress" required
+           placeholder="Ваш email адрес" title="введите свой адрес электронной почты"/>
+  </div>
+  <div>
+    <label for="phoneNumber">Номер телефона:</label>
+    <!-- Номер телефона должен соответствовать паттерну +7********** или 8********** без пробелов -->
+    <input type="text" id="phoneNumber" name="phoneNumber" required pattern="(\+7|8)\d{10}"
+           placeholder="Номер телефона (+79********* или 89*********)" title="Введите номер телефона без пробелов по шаблону: +7********** или 8**********"/>
+  </div>
+  <!--
+  <div>
+    <label for="passportSeries">Серия паспорта</label>
+    <!- Серия паспорта. 4 цифры без пробелов ->
+    <input type="text" id="passportSeries" name="passportSeries" required pattern="\d{4}"
+           placeholder="Серия паспорта (без пробелов)" title="Серия паспорта (4 цифры). Без пробелов"/>
+  </div>
+  <div>
+    <label for="passportNumber">Номер паспорта</label>
+    <!- Номер паспорта. 6 цифр без пробелов ->
+    <input type="text" id="passportNumber" name="passportNumber" required pattern="\d{6}"
+           placeholder="Номер паспорта (без пробелов)" title="Номер паспорта (6 цифр). Без пробелов"/>
+  </div>
+  -->
+  <div>
+    <button type="submit">Зарегистрироваться</button>
+  </div>
+</form>
+<!--Кнопка для перехода к странице авторизации-->
+<form action="/login" method="get">
+  <button type="submit">Уже зарегистрированы? Войти</button>
+</form>
+<script src="/js/ChangingPasswordVisibility.js"></script>
+<script src="/js/RegistrationValidation.js"></script>
+</body>
+</html>
