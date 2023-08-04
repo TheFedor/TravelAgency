@@ -114,6 +114,12 @@ public class DataAndShowToursController {
         //сохраняем доступность туров в модель
         model.addAttribute("toursAvailable", listToursAvailable);
 
+        //сохраняем даты начала и окончания поездки пользователя в модель
+        LocalDate dateClientStart = (LocalDate) session.getAttribute("clientTourStartDate");
+        LocalDate dateClientEnd = (LocalDate) session.getAttribute("clientTourEndDate");
+        model.addAttribute("clientTourStartDate", dateClientStart);
+        model.addAttribute("clientTourEndDate", dateClientEnd);
+
         return "dateAndShowTours";
     }
 

@@ -4,8 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Выбор туров и дата поездки</title>
+    <link rel="stylesheet" href="/css/divOnDateAndShowToursSize.css">
 </head>
-<body>
+<body style="background-color: chocolate">
 <h1>Выбор туров и дата поездки</h1>
 
 <form action="/dateAndShowTours" method="post">
@@ -24,13 +25,18 @@
 
 <!--Если даты поездки пользователь уже ввел-->
 <div th:if="${showTours}">
+    <!--Выводим даты поездки клиента-->
+    <div style="background-color: palegoldenrod" class="div-on-date-and-show-tours-size">
+        <h4> Выбранная дата начала поездки, <span th:text="${clientTourStartDate}"></span></h4>
+        <h4> Выбранная дата окончания поездки, <span th:text="${clientTourEndDate}"></span></h4>
+    </div>
     <h2>Список доступных туров:</h2>
     <div th:each="tour : ${toursList}" style="border: 1px solid black;">
         <div th:each="ibp : ${toursAvailable}">
             <div th:if="${ibp.integerValue} == ${tour.tourCode}">
                 <!--Если для тура есть хоть один свободный номер на эти даты-->
                 <div th:if="${ibp.booleanValue}">
-                    <div class="clickableBlock" th:data-href="@{/dateAndShowTours/selectTour/{tourCode}(tourCode=${tour.tourCode})}">
+                    <div class="clickableBlock div-on-date-and-show-tours-size" style="background-color: aqua" th:data-href="@{/dateAndShowTours/selectTour/{tourCode}(tourCode=${tour.tourCode})}">
                         <h4 style="text-decoration: underline;">Название тура:</h4>
                         <h3 th:text="${tour.tourName}"></h3>
                         <h4 style="text-decoration: underline;">Страна тура:</h4>
@@ -45,7 +51,7 @@
                 </div>
                 <!--Если для тура нет ни одного свободного номера на эти даты-->
                 <div th:if="${!ibp.booleanValue}">
-                    <div class="clickableBlock" th:data-href="@{/dateAndShowTours/selectTour/{tourCode}(tourCode=${tour.tourCode})}" style="background: url('/technical-images/noRoomsOnYourDates.png')>
+                    <div class="clickableBlock div-on-date-and-show-tours-size" th:data-href="@{/dateAndShowTours/selectTour/{tourCode}(tourCode=${tour.tourCode})}" style="background: url('/technical-images/noRoomsOnYourDates.png')">
                         <h4 style="text-decoration: underline;">Название тура:</h4>
                         <h3 th:text="${tour.tourName}"></h3>
                         <h4 style="text-decoration: underline;">Страна тура:</h4>
@@ -66,7 +72,7 @@
 <div th:if="${!showTours}">
     <h2>Список доступных туров:</h2>
     <div th:each="tour : ${toursList}" style="border: 1px solid black">
-        <div style="background: url('/technical-images/BanToursImage.png') no-repeat center center; background-size: cover;">
+        <div class="div-on-date-and-show-tours-size" style="background: url('/technical-images/BanToursImage.png') no-repeat center center; background-size: cover;">
             <h4 style="text-decoration: underline;">Название тура:</h4>
             <h3 th:text="${tour.tourName}"></h3>
             <h4 style="text-decoration: underline;">Страна тура:</h4>
