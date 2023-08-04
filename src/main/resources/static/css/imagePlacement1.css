@@ -1,0 +1,10 @@
+.image-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 10px; /* Расстояние между изображениями */
+}
+
+.image-wrapper {
+    flex: 0 0 calc(20% - 10px); /* Размер блока с изображением (3 изображения в строку) */
+    box-sizing: border-box;
+}

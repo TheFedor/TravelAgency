@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Выбор номера тура</title>
+    <link rel="stylesheet" href="/css/imagePlacement1.css">
+</head>
+<body style="background-color: black">
+
+<!--Кнопка для возвращения к предыдущей странице-->
+<form action="/tourDescriptionAndTourRoomsPage/toDataAndShowTours" method="get">
+    <button type="submit">Вернуться к выбору туров</button>
+</form>
+
+<!--Название отеля-->
+<h3 style="color: aliceblue">Вы выбрали отель: <h2 style="color: aliceblue"><span th:text="${thisTour.hotelName}"></span></h2></h3>
+<h3 style="color: aliceblue">Мы очень рады вашему выбору!</h3>
+
+<!--Описание отеля-->
+<h2 style="color: aliceblue">Описание отеля:</h2>
+<div style="color: aliceblue">
+    <span th:text="${thisTour.hotelDescription}"></span>
+</div>
+
+<!--Все фотографии отеля-->
+<h2 style="color: aliceblue">Все фотографии отеля:</h2>
+<div class="image-container">
+    <div th:each="photoLink : ${thisHotelPhotoLinks}" class="image-wrapper">
+        <img th:src="${photoLink}" width="250" height="250" alt="ImageNotFound">
+    </div>
+</div>
+
+<!--Далее идут блоки с номерами отлеля-->
+<h2 style="color: aliceblue">Номера отеля:</h2>
+<div th:each="room : ${roomsList}" style="border: 1px solid black">
+    <div th:each="ibp : ${roomsAvailable}">
+        <div th:if="${ibp.integerValue} == ${room.roomCode}">
+            <div th:if="${ibp.booleanValue}">
+                <div class="clickableBlock" style="background-color: aqua" th:data-href="@{/tourDescriptionAndTourRoomsPage/selectRoom/{roomCode}(roomCode=${room.roomCode})}">
+                    <h3>Название номера: <span th:text="${room.roomName}"></span></h3>
+                    <h3>Цена номера: <span th:text="${room.roomPricePerDay}"></span></h3>
+                </div>
+            </div>
+            <div th:if="${!ibp.booleanValue}">
+                <div style="background-color: gray">
+                    <h3>Название номера: <span th:text="${room.roomName}"></span></h3>
+                    <h3>Цена номера: <span th:text="${room.roomPricePerDay}"></span></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+<script src="/js/clickableBlocks.js"></script>
+</body>
+</html>

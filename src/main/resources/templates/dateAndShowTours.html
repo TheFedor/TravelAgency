@@ -3,13 +3,13 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Выбор туров и дата поездки</title>
+    <title>Выбор туров и даты поездки</title>
     <link rel="stylesheet" href="/css/divOnDateAndShowToursSize.css">
 </head>
-<body style="background-color: chocolate">
-<h1>Выбор туров и дата поездки</h1>
+<body style="background-color: black">
+<h1 style="color: aliceblue">Выбор туров и дата поездки</h1>
 
-<form action="/dateAndShowTours" method="post">
+<form action="/dateAndShowTours" method="post" style="color: aliceblue">
     <div>
         <label for="startDate">Выберите дату начала поездки:</label>
         <input type="date" id="startDate" name="startDate" required>
@@ -30,7 +30,7 @@
         <h4> Выбранная дата начала поездки, <span th:text="${clientTourStartDate}"></span></h4>
         <h4> Выбранная дата окончания поездки, <span th:text="${clientTourEndDate}"></span></h4>
     </div>
-    <h2>Список доступных туров:</h2>
+    <h2 style="color: aliceblue">Список доступных туров:</h2>
     <div th:each="tour : ${toursList}" style="border: 1px solid black;">
         <div th:each="ibp : ${toursAvailable}">
             <div th:if="${ibp.integerValue} == ${tour.tourCode}">
@@ -70,7 +70,7 @@
 </div>
 <!--Если даты поездки пользователь еще не ввел-->
 <div th:if="${!showTours}">
-    <h2>Список доступных туров:</h2>
+    <h2 style="color: aliceblue">Список доступных туров:</h2>
     <div th:each="tour : ${toursList}" style="border: 1px solid black">
         <div class="div-on-date-and-show-tours-size" style="background: url('/technical-images/BanToursImage.png') no-repeat center center; background-size: cover;">
             <h4 style="text-decoration: underline;">Название тура:</h4>

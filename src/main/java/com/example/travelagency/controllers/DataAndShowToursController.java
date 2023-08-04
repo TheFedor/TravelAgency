@@ -13,9 +13,7 @@ import org.springframework.web.bind.annotation.*;
 
 import java.time.LocalDate;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 @Controller
 @RequestMapping("/dateAndShowTours")
@@ -140,7 +138,7 @@ public class DataAndShowToursController {
     @GetMapping("/selectTour/{tourCode}")
     public String selectTour(@PathVariable("tourCode") Integer tourCode, HttpSession session) {
         session.setAttribute("tourClientCode", tourCode);
-        return "redirect:/tourAndTourRoomsPage";
+        return "redirect:/tourDescriptionAndTourRoomsPage";
     }
 
 }
