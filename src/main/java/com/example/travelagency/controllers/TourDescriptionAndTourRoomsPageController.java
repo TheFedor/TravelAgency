@@ -3,6 +3,7 @@ package com.example.travelagency.controllers;
 import com.example.travelagency.entities.HotelRooms;
 import com.example.travelagency.entities.Tours;
 import com.example.travelagency.pairClasses.IntegerBooleanPair;
+import com.example.travelagency.pairClasses.IntegerIntegerPair;
 import com.example.travelagency.repositories.HotelPhotosRepository;
 import com.example.travelagency.repositories.HotelRoomsRepository;
 import com.example.travelagency.repositories.ToursRepository;
@@ -36,6 +37,10 @@ public class TourDescriptionAndTourRoomsPageController {
     @GetMapping
     public String showInformationAboutTourAndTourRooms(Model model, HttpSession session)
     {
+        //удаляем код номера из сессии, если он есть
+        if (session.getAttribute("roomClientCode") != null)
+            session.removeAttribute("roomClientCode");
+
         //получаем код тура по которому перешел клиент
         Integer clientTourCode = (Integer) session.getAttribute("tourClientCode");
         //получаем все данные о туре, по которому перешел клиент и сохраняем их в модель
@@ -63,6 +68,26 @@ public class TourDescriptionAndTourRoomsPageController {
         List<IntegerBooleanPair> roomsAvailable = (List) session.getAttribute("roomsAvailable");
         model.addAttribute("roomsAvailable", roomsAvailable);
 
+        //Сохраняем в модель все номера, которые клиент уже выбрал (если такие есть). Точнее, вообще все номера тура и пометку выбрал ли этот номер клиент
+        //true - клиент этот номер уже выбрал, false - не выбирал этот номер
+        List<IntegerBooleanPair> alreadySelectedTheseRoom = new ArrayList<>();
+        if (session.getAttribute("roomsAndItsPrice") != null) {
+            List<IntegerIntegerPair> roomsAndItsPrice = (List) session.getAttribute("roomsAndItsPrice");
+            for (Integer roomCode : thisTourRoomCodes) {
+                boolean b = false;
+                for (IntegerIntegerPair roomThatWasChosen : roomsAndItsPrice) {
+                    if (roomThatWasChosen.getIntegerValue1() == roomCode)
+                        b = true;
+                }
+                alreadySelectedTheseRoom.add(new IntegerBooleanPair(roomCode, b));
+            }
+        }
+        else {
+            for (Integer roomCode : thisTourRoomCodes){
+                alreadySelectedTheseRoom.add(new IntegerBooleanPair(roomCode, false));
+            }
+        }
+        model.addAttribute("alreadySelectedTheseRoom", alreadySelectedTheseRoom);
 
         return "tourDescriptionAndTourRoomsPage";
     }
@@ -72,23 +97,34 @@ public class TourDescriptionAndTourRoomsPageController {
     {
         if (session.getAttribute("tourClientCode") != null)
             session.removeAttribute("tourClientCode");
+        if (session.getAttribute("roomsAndItsPrice") != null)
+            session.removeAttribute("roomsAndItsPrice");
 
         return "redirect:/dateAndShowTours";
     }
 
     @GetMapping("/selectRoom/{roomCode}")
-    public String selectTour(@PathVariable("roomCode") Integer roomCode, HttpSession session) {
+    public String selectRoom(@PathVariable("roomCode") Integer roomCode, HttpSession session) {
+
         session.setAttribute("roomClientCode", roomCode);
-        HotelRooms thisHotelRoom = hotelRoomsRepository.findById(roomCode).orElse(null);
-        if (thisHotelRoom == null)
-            System.out.println("error. room not found...");
-        else
-        {
-            Integer thisRoomPricePerDay = thisHotelRoom.getRoomPricePerDay();
-            session.setAttribute("roomPrice", thisRoomPricePerDay);
-        }
 
         return "redirect:/roomDescription";
+    }
+
+    @GetMapping("/removeRoom/{roomCode}")
+    public String removeRoom(@PathVariable("roomCode") Integer roomCode, HttpSession session) {
+        List<IntegerIntegerPair> alreadySelectedTheseRoom = (List) session.getAttribute("roomsAndItsPrice");
+        session.removeAttribute("roomsAndItsPrice");
+        for (int i = 0; i < alreadySelectedTheseRoom.size(); ++i) {
+            if (alreadySelectedTheseRoom.get(i).getIntegerValue1().equals(roomCode))
+            {
+                alreadySelectedTheseRoom.remove(i);
+                break;
+            }
+        }
+        session.setAttribute("roomsAndItsPrice", alreadySelectedTheseRoom);
+
+        return "redirect:/tourDescriptionAndTourRoomsPage";
     }
 
 }

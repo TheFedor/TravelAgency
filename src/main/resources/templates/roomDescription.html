@@ -1,0 +1,38 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Описание номера</title>
+  <link rel="stylesheet" href="/css/imagePlacement1.css">
+</head>
+<body style="background-color: black">
+<!--Название номера-->
+<h3 style="color: aliceblue">Вы просматриваете номер: <h2 style="color: aliceblue"><span th:text="${thisRoom.roomName}"></span></h2></h3>
+
+<!--Описание номера-->
+<h2 style="color: aliceblue">Описание номера:</h2>
+<div style="color: aliceblue">
+  <span th:text="${thisRoom.roomDescription}"></span>
+</div>
+
+<!--Все фотографии номера-->
+<h2 style="color: aliceblue">Все фотографии номера:</h2>
+<div class="image-container">
+  <div th:each="photoLink : ${thisRoomPhotos}" class="image-wrapper">
+    <img th:src="${photoLink}" width="250" height="250" alt="ImageNotFound">
+  </div>
+</div>
+
+<!--Добавим кнопку для возвращения назад, если номер не понравился-->
+<form action="/tourDescriptionAndTourRoomsPage" method="get">
+  <button type="submit">Не нравится номер. Вернуться к выбору номеров</button>
+</form>
+
+<!--Добавим кнопку для добавления этого номера к списку выбранных номеров-->
+<form action="/roomDescription/iChooseThisRoom" method="get">
+  <button type="submit">Выбрать этот номер, он мне подходит</button>
+</form>
+
+</body>
+</html>

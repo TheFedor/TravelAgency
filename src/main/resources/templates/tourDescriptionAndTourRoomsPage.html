@@ -36,12 +36,31 @@
 <div th:each="room : ${roomsList}" style="border: 1px solid black">
     <div th:each="ibp : ${roomsAvailable}">
         <div th:if="${ibp.integerValue} == ${room.roomCode}">
+            <!--если номер активен-->
             <div th:if="${ibp.booleanValue}">
-                <div class="clickableBlock" style="background-color: aqua" th:data-href="@{/tourDescriptionAndTourRoomsPage/selectRoom/{roomCode}(roomCode=${room.roomCode})}">
-                    <h3>Название номера: <span th:text="${room.roomName}"></span></h3>
-                    <h3>Цена номера: <span th:text="${room.roomPricePerDay}"></span></h3>
+                <div th:each="astr : ${alreadySelectedTheseRoom}">
+                    <div th:if="${room.roomCode} == ${astr.integerValue}">
+                        <!--если клиент уже выбрал этот номер-->
+                        <div th:if="${astr.booleanValue}">
+                            <div style="background-color: aquamarine">
+                                <h3>Название номера: <span th:text="${room.roomName}"></span></h3>
+                                <h3>Цена номера: <span th:text="${room.roomPricePerDay}"></span></h3>
+                                <form th:action="@{/tourDescriptionAndTourRoomsPage/removeRoom/{roomCode}(roomCode=${room.roomCode})}" method="get">
+                                    <button type="submit">Удалить этот номер из выбранных</button>
+                                </form>
+                            </div>
+                        </div>
+                        <!--если клиент не выбирал этот номер-->
+                        <div th:if="${!astr.booleanValue}">
+                            <div class="clickableBlock" style="background-color: aqua" th:data-href="@{/tourDescriptionAndTourRoomsPage/selectRoom/{roomCode}(roomCode=${room.roomCode})}">
+                                <h3>Название номера: <span th:text="${room.roomName}"></span></h3>
+                                <h3>Цена номера: <span th:text="${room.roomPricePerDay}"></span></h3>
+                            </div>
+                        </div>
+                    </div>
                 </div>
             </div>
+            <!--если номер неактивен-->
             <div th:if="${!ibp.booleanValue}">
                 <div style="background-color: gray">
                     <h3>Название номера: <span th:text="${room.roomName}"></span></h3>
@@ -51,6 +70,10 @@
         </div>
     </div>
 </div>
+
+<form action="/transportPage" method="get">
+    <button type="submit">Закончить выбор номеров</button>
+</form>
 
 
 <script src="/js/clickableBlocks.js"></script>

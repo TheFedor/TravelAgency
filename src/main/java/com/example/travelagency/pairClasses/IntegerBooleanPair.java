@@ -16,4 +16,8 @@ public class IntegerBooleanPair {
         this.booleanValue = booleanValue;
     }
 
+    @Override
+    public String toString() {
+        return "(integerValue=" + integerValue + ", booleanValue=" + booleanValue + ')';
+    }
 }
