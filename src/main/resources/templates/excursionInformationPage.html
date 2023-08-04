@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Подробная информация об экскурсии</title>
+  <link rel="stylesheet" href="/css/imagePlacement1.css">
+</head>
+<body>
+
+<h3>Название экскурсии: <h2><span th:text="${thisExcursion.getExcursionName()}"></span></h2></h3>
+
+<h3>Описание экскурсии:</h3>
+<div>
+  <span th:text="${thisExcursion.getExcursionDescription()}"></span>
+</div>
+
+<h3>Цена экскурсии: <h2><span th:text="${thisExcursion.getExcursionPrice()}"></span></h2></h3>
+
+<h3>Экскурсии проводятся по следующим датам</h3>
+<div th:each="dateArray : ${excursionDates}">
+  ↓ дата начала периода экскурсий ↓
+  <h2 th:each="date : ${dateArray}">
+    <h2><span th:text="${date}"> - </span></h2>
+  </h2>
+  ↑ дата окончания периода экскурсий ↑
+</div>
+
+<h3>Фотографии экскурсии:</h3>
+<div class="image-container">
+  <div th:each="photo : ${excursionPhotos}" class="image-wrapper">
+    <img th:src="${photo}" width="250" height="250" alt="Нет фото">
+  </div>
+</div>
+
+<form action="/excursionsPage" method="get">
+  <button type="submit">Вернуться к списку экскурсий</button>
+</form>
+
+</body>
+</html>

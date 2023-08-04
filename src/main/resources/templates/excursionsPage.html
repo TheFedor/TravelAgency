@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Выбор экскурсии</title>
+</head>
+<body>
+
+<h2>Выбор экскурсий тура</h2>
+
+<div th:each="excursion : ${excursionsList}">
+  <div th:each="ea : ${excursionsAvailable}">
+    <div th:if="${ea.getExcursionCode()} == ${excursion.getExcursionCode()}">
+      <!--Выводим данные об экскурсии только если она доступна-->
+      <div th:if="${ea.isExcursionAvailable()}">
+        <div class="clickableBlock" style="background-color: aqua" th:data-href="@{'/excursionsPage/selectExcursion' + '/' + ${excursion.excursionCode}}">
+          <h3>Название экскурсии: <h2><span th:text="${excursion.getExcursionName()}"></span></h2></h3>
+          <h3>Цена экскурсии: <h2><span th:text="${excursion.getExcursionPrice()}"></span></h2></h3>
+        </div>
+        <form th:action="@{/excursionsPage/saveTicketsValue}" method="post">
+          <input type="hidden" th:name="blockKey" th:value="${excursion.excursionCode}" />
+          <input type="number" th:name="value" />
+          <button type="submit">Подтвердить</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</div>
+
+<form action="/excursionsPage/toTransport" method="get">
+  <button type="submit">Вернуться к выбору транспорта</button>
+</form>
+<form action="/excursionsPage/toResultPage" method="get">
+  <button type="submit">Закончить оформление</button>
+</form>
+
+
+<script src="/js/clickableBlocks.js"></script>
+</body>
+</html>
