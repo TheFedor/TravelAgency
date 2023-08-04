@@ -22,19 +22,64 @@
     </div>
 </form>
 
+<!--Если даты поездки пользователь уже ввел-->
 <div th:if="${showTours}">
     <h2>Список доступных туров:</h2>
-    <div th:each="tour : ${toursList}" style="border: 1px solid black">
-        <div>
-            <a a th:href="@{/dateAndShowTours/selectTour/{tourCode}(tourCode=${tour.tourCode})}">
-                <h3 th:text="${tour.tourName}"></h3>
-                <p th:text="${tour.tourCountry}"></p>
-                <p th:text="${tour.tourShortDescription}"></p>
-                <p th:text="${tour.hotelName}"></p>
-                <img th:src="${tour.coverImageLink}" alt="Hotel Image" width="250" height="250">
-            </a>
+    <div th:each="tour : ${toursList}" style="border: 1px solid black;">
+        <div th:each="ibp : ${toursAvailable}">
+            <div th:if="${ibp.integerValue} == ${tour.tourCode}">
+                <!--Если для тура есть хоть один свободный номер на эти даты-->
+                <div th:if="${ibp.booleanValue}">
+                    <div class="clickableBlock" th:data-href="@{/dateAndShowTours/selectTour/{tourCode}(tourCode=${tour.tourCode})}">
+                        <h4 style="text-decoration: underline;">Название тура:</h4>
+                        <h3 th:text="${tour.tourName}"></h3>
+                        <h4 style="text-decoration: underline;">Страна тура:</h4>
+                        <p th:text="${tour.tourCountry}"></p>
+                        <h4 style="text-decoration: underline;">Краткое описание тура:</h4>
+                        <p th:text="${tour.tourShortDescription}"></p>
+                        <h4 style="text-decoration: underline;">Название отеля тура:</h4>
+                        <p th:text="${tour.hotelName}"></p>
+                        <h4 style="text-decoration: underline;">Предпоказ отеля тура:</h4>
+                        <img th:src="${tour.coverImageLink}" alt="Hotel Image" width="300" height="300">
+                    </div>
+                </div>
+                <!--Если для тура нет ни одного свободного номера на эти даты-->
+                <div th:if="${!ibp.booleanValue}">
+                    <div class="clickableBlock" th:data-href="@{/dateAndShowTours/selectTour/{tourCode}(tourCode=${tour.tourCode})}" style="background: url('/technical-images/noRoomsOnYourDates.png')>
+                        <h4 style="text-decoration: underline;">Название тура:</h4>
+                        <h3 th:text="${tour.tourName}"></h3>
+                        <h4 style="text-decoration: underline;">Страна тура:</h4>
+                        <p th:text="${tour.tourCountry}"></p>
+                        <h4 style="text-decoration: underline;">Краткое описание тура:</h4>
+                        <p th:text="${tour.tourShortDescription}"></p>
+                        <h4 style="text-decoration: underline;">Название отеля тура:</h4>
+                        <p th:text="${tour.hotelName}"></p>
+                        <h4 style="text-decoration: underline;">Предпоказ отеля тура:</h4>
+                        <img th:src="${tour.coverImageLink}" alt="Hotel Image" width="300" height="300">
+                    </div>
+                </div>
+            </div>
         </div>
     </div>
 </div>
+<!--Если даты поездки пользователь еще не ввел-->
+<div th:if="${!showTours}">
+    <h2>Список доступных туров:</h2>
+    <div th:each="tour : ${toursList}" style="border: 1px solid black">
+        <div style="background: url('/technical-images/BanToursImage.png') no-repeat center center; background-size: cover;">
+            <h4 style="text-decoration: underline;">Название тура:</h4>
+            <h3 th:text="${tour.tourName}"></h3>
+            <h4 style="text-decoration: underline;">Страна тура:</h4>
+            <p th:text="${tour.tourCountry}"></p>
+            <h4 style="text-decoration: underline;">Краткое описание тура:</h4>
+            <p th:text="${tour.tourShortDescription}"></p>
+            <h4 style="text-decoration: underline;">Название отеля тура:</h4>
+            <p th:text="${tour.hotelName}"></p>
+            <h4 style="text-decoration: underline;">Предпоказ отеля тура:</h4>
+            <img th:src="${tour.coverImageLink}" alt="Hotel Image" width="300" height="300">
+        </div>
+    </div>
+</div>
+<script src="/js/clickableBlocks.js"></script>
 </body>
 </html>

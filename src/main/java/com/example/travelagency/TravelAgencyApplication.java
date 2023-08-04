@@ -9,5 +9,5 @@ public class TravelAgencyApplication {
     public static void main(String[] args) {
         SpringApplication.run(TravelAgencyApplication.class, args);
     }
-//http://localhost:8080/dateAndShowTours
+//http://localhost:8080/start
 }
