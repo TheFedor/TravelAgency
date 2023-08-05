@@ -4,7 +4,10 @@
     <title>Дозаполнение данных клиента</title>
 </head>
 <body>
-<button
+<!--Кнопка выхода-->
+<form action="/start" method="get" style="position: absolute; top: 0; right: 0">
+    <button type="submit">Выйти из аккаунта</button>
+</form>
 
 <form th:action="@{/addMoreData}" th:object="${localClient}" method="post">
     <div>

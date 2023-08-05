@@ -6,6 +6,10 @@
     <title>Выбор транспорта</title>
 </head>
 <body>
+<!--Кнопка выхода-->
+<form action="/start" method="get" style="position: absolute; top: 0; right: 0">
+  <button type="submit">Выйти из аккаунта</button>
+</form>
 
 <div th:each="aat : ${allAboutTransports}">
   <div style="border: 1px  solid black" class="clickableBlock" th:data-href="@{'/transportPage/selectTransport/' + ${aat.transportTypeCode} + '/' + ${aat.transportPrice}}">

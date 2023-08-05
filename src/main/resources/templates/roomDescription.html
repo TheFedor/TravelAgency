@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="/css/imagePlacement1.css">
 </head>
 <body style="background-color: black">
+<!--Кнопка выхода-->
+<form action="/start" method="get" style="position: absolute; top: 0; right: 0">
+  <button type="submit">Выйти из аккаунта</button>
+</form>
 <!--Название номера-->
 <h3 style="color: aliceblue">Вы просматриваете номер: <h2 style="color: aliceblue"><span th:text="${thisRoom.roomName}"></span></h2></h3>
 

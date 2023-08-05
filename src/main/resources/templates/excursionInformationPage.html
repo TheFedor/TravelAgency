@@ -7,6 +7,10 @@
   <link rel="stylesheet" href="/css/imagePlacement1.css">
 </head>
 <body>
+<!--Кнопка выхода-->
+<form action="/start" method="get" style="position: absolute; top: 0; right: 0">
+  <button type="submit">Выйти из аккаунта</button>
+</form>
 
 <h3>Название экскурсии: <h2><span th:text="${thisExcursion.getExcursionName()}"></span></h2></h3>
 
