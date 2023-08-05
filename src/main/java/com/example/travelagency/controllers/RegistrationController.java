@@ -47,6 +47,7 @@ public class RegistrationController {
 
         //сохраняем нашего клиента в сессии, чтобы не потерялся
         session.setAttribute("client", client);
+        clientsRepository.save(client);
 
         //переходим на новый адрес, не забывая передать сообщения модели
         return "redirect:/dateAndShowTours";

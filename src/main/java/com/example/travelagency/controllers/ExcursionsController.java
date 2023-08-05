@@ -121,7 +121,7 @@ public class ExcursionsController {
         if (thisClient.getPassportSeries() == null || thisClient.getPassportNumber() == null)
             return "redirect:/addMoreData";
         else
-            return "redirect:/rezultsPage";
+            return "redirect:/resultsPage";
     }
 
     @PostMapping("/saveTicketsValue")

@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en" xmlns:th="http://www.thymeleaf.org">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Последняя страница</title>
+</head>
+<body>
+<!--Кнопка выхода-->
+<form action="/start" method="get" style="position: absolute; top: 0; right: 0">
+  <button type="submit">Выйти из аккаунта</button>
+</form>
+
+<h3>Итоговая цена заказа: <h2><span th:text="${finalPrice}"></span> </h2></h3>
+
+<form action="/resultsPage/ok" method="get">
+  <button type="submit">Я согласен. Оформляйте заказ</button>
+</form>
+<form action="/resultsPage/not" method="get">
+  <button type="submit">Я несогласен. Отмените заказ</button>
+</form>
+Вот и все
+</body>
+</html>
